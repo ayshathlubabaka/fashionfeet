@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="colorlib-product">
+    <div class="container">
+        <div class="row row-pb-lg">
+            <div class="col-md-12">
+                
+                    <div class="card text-center">
+   
+                        <div class="card-body">
+                          <h5 class="card-title">My Orders</h5>
+                          
+                    <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th scope="col">Order #</th>
+                            <th scope="col">Billing Name</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Order Total</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Cancel</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                          <tr>
+                            <th scope="row"><a href="{% url 'order_detail' order.order_number  %}">
+                              {{order.order_number}}</a></th>
+                            <td>{{order.full_name}}</td>
+                            <td>{{order.phone}}</td>
+                            <td>{{order.order_total}}</td>
+                            <td>{{order.created_at}}</td>
+                            <td id="status-{{ order.id }}">{{ order.status }}</td>
+                            <td>
+                              {% if order.status != 'Cancelled' %}
+                              <form action="{% url 'cancel_order' order.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="cancel-order-btn" style="background-color: red;">Cancel</button>
+                              </form>
+                              {% else %}
+                               <button style="background-color: rgb(48, 157, 197);"><span class="cancelled-status">Cancelled</span></button>
+                              {% endif %}
+                            </td>
+
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                         
+                        </div>
+                      </div>
+                </div>
+                
+        
+        </div>
+        
+        
+        </div>
+    </div>
+    <script>
+
+
+</script>
+{% endblock %}

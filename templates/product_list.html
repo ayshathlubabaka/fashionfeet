@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid bg-light">
+	<li class="dropdown">
+        <button type="button" id="selectedButton" class="dropdown-toggle" data-toggle="dropdown" style="background-color:white; width: 80px; ">
+            Sort
+        </button>
+        <ul class="dropdown-menu">
+            <li class="dropdown-submenu">
+                <a class="dropdown-item" data-sort="newToOld" href="?sort=newToOld">New to Old items</a>
+            </li>
+            <li class="dropdown-submenu">
+                <a class="dropdown-item" data-sort="oldToNew" href="?sort=oldToNew">Old to New Items</a>
+            </li>
+            <li class="dropdown-submenu">
+                <a class="dropdown-item" data-sort="highToLow" href="?sort=highToLow">High to Low Price</a>
+            </li>
+            <li class="dropdown-submenu">
+                <a class="dropdown-item" data-sort="lowToHigh" href="?sort=lowToHigh">Low to High Price</a>
+            </li>
+        </ul>
+    </li>
+</div>
+
+
+<div class="container-fluid" style="height: 30px;"></div>
+		<div class="colorlib-featured" id="product_list">
+			<div class="container" >
+				<div class="row">
+					{% for p in products %}
+					<div class="col-md-4 mt-4">
+						<div class="card card-product-grid text-center" style="background-color:#b0deb6; height: 400px;">
+							
+							<a href="/view_prod/{{p.id}}" class="img-wrap" style="padding-top: 10px;"><img src="{{p.images.url}}" height="180px" width="180px"> </a>
+							<figcaption class="info-wrap">
+								<a href="/view_prod/{{p.id}}" class="title" style="font-weight: bold; color: rgb(23, 20, 20);">{{p.product_name | capfirst}}</a>
+                 <div class="price mt-1 mb-2" style="color: rgb(37, 31, 31); font-weight: bold;">Rs. {{p.price}}</div>
+                 {% if p.new_price != p.price %}
+                 <div class="price mt-1 mb-2" style="color: rgb(215, 4, 4); font-weight: bold;">Offer price : Rs. {{p.new_price}}</div>
+               
+                 {% endif %}
+								<div class="col-sm-12 text-center">
+        
+							
+									<p class="addtocart"><a href="/view_prod/{{p.id}}" class="btn btn-addtocart" style="background-color: #cab23d; color: black;"> View Details</a></p>
+									{% if user.is_authenticated %}
+								<a href="{% url 'add_to_wishlist' product_id=p.id %}" class="btn"><span style="font-size:large;">&#10084;</span>Add to Wishlist</i></a>
+								{% endif %}
+              </div>
+							</figcaption>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+
+
+	<div class="mb-5">
+		{% if products.has_other_pages %}
+		<div class="paginator mb-5">
+			{% if products.has_previous %}
+			<a href="?page={{ products.previous_page_number }}" class="prev active">Prev</a>
+			{% else %}
+			<a href="#" class="prev disabled">Prev</a>
+			{% endif %}
+			
+			{% for i in products.paginator.page_range %}
+				{% if products.number == i %}
+				<a href="#" class="page">{{ i }}</a>
+				{% else %}
+				<a href="?page={{ i }}" class="page">{{ i }}</a>
+				{% endif %}
+			{% endfor %}
+			
+			{% if products.has_next %}
+			<a href="?page={{ products.next_page_number }}" class="prev active">Next</a>
+			{% else %}
+			<a href="#" class="prev disabled">Next</a>
+			{% endif %}
+		</div>
+		{% endif %}
+	</div>
+
+{% endblock %}	
+
+	

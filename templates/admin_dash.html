@@ -1,0 +1,152 @@
+{% extends 'admin_base.html' %}
+{% block content%}
+ <section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-6 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{total_orders}}</h3>
+  
+                  <p>New Orders</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="{% url 'admin_order'%}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+ 
+            <!-- ./col -->
+            <div class="col-lg-6 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{total_users}}</h3>
+  
+                  <p>User Registrations</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-person-add"></i>
+                </div>
+                <a href="{% url 'user_manage' %}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+        
+            <!-- ./col -->
+          </div>
+          <!-- /.row -->
+          <!-- Main row -->
+          <div class="row">
+
+            <div class="col-md-6">
+                <h3><a href="{% url 'pdf_view' %}" target="_blank">View</a>/
+                <a href="{% url 'pdf_download' %}">Download</a> Sales Report PDF</h3>
+                </div>
+
+          
+             
+            </div>
+
+            <div class="row"  style="background-color: rgb(241, 241, 128);">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <canvas id="myChart1" width="400" height="300"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart1').getContext('2d');
+                            var myChart1 = new Chart(ctx, {
+                                type: 'pie',
+                                data: {
+                                    labels: [{% for product in products %} '{{product.product_name}}', {% endfor %}],
+                            datasets: [{
+                                label: 'Number of Products',
+                                data: [{% for product in products %} {{product.num_orders }}, {% endfor %}],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                        borderWidth: 1
+                            }]
+                                },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-6" style="background-color: rgb(204, 237, 241);">
+                    <div class="card-body">
+                        <canvas id="myChart" width="400" height="300"></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: [{% for product in products %} '{{product.product_name}}',{% endfor %}],
+                            datasets: [{
+                                label: 'Orders',
+                                data: [{% for product in products %} {{product.num_orders }}, {% endfor %}],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                        borderWidth: 1
+                            }]
+                                },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }]
+                                }
+                            }
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+
+
+            
+       
+{% endblock %}
+    

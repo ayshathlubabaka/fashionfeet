@@ -1,0 +1,31 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'theme-assets/css/admin_login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <section class="login" id="login">
+          <header>
+            <h2>Admin Login</h2>
+            {% for message in messages %}
+            <h5 style="color: #C62828;">{{message}}</h5>
+            {% endfor %}
+          </header>
+          <form class="login-form" action="" method="post">
+            {% csrf_token %}
+            <input type="emai" name="email" class="login-input" placeholder="Email" required autofocus/>
+            <input type="password" name="password" class="login-input" placeholder="Password" required/>
+            <div class="submit-container">
+            <button type="submit" class="login-button">SIGN IN</button>
+            </div>
+          </form>
+        </section>
+      </div>
+      <script src="{% static 'theme-assets/js/admin_login.js' %}" type="text/javascript"></script>
+</body>
+</html>

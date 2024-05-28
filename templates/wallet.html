@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content%}
+
+<div class="container">
+    <div class="wallet-container mt-5">
+      <h2 class="text-center">My Wallet</h2>
+      <div class="row">
+      <div class="col-md-3"></div>
+      <div class="balance col-md-6 text-center" style="background-color: #90c888; border: solid;">
+        <h4>Current Balance:</h4>
+        <p  style="font-weight: bold; color: red;">Rs. {{balance}}</p>
+      </div>
+    </div>
+    
+  </div>
+    </div>
+  
+
+  {% endblock %}
